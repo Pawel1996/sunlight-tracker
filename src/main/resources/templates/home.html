@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Śledzenie czasu dziennego i nocnego</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .time-elapsed {
+            font-size: 24px;
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+        }
+        .time-unit {
+            font-weight: bold;
+            color: #0066cc;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Śledzenie czasu dziennego i nocnego</h1>
+
+    <div class="time-elapsed">
+        Od początku roku upłynęło:
+        <span id="days" class="time-unit" th:text="${days}">0</span> dni,
+        <span id="hours" class="time-unit" th:text="${hours}">0</span> godzin,
+        <span id="minutes" class="time-unit" th:text="${minutes}">0</span> minut i
+        <span id="seconds" class="time-unit" th:text="${seconds}">0</span> sekund
+    </div>
+</div>
+
+<script>
+    // Funkcja do aktualizacji czasu
+    function updateTimeElapsed() {
+        fetch('/api/time-elapsed')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('days').textContent = data.days;
+                document.getElementById('hours').textContent = data.hours;
+                document.getElementById('minutes').textContent = data.minutes;
+                document.getElementById('seconds').textContent = data.seconds;
+            })
+            .catch(error => console.error('Błąd podczas pobierania danych:', error));
+    }
+
+    // Aktualizuj czas co sekundę
+    setInterval(updateTimeElapsed, 1000);
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.example.sunlight_tracker;
+package com.example.sunlighttracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
